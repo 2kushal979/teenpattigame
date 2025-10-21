@@ -9,7 +9,7 @@ class TeenpattiGame extends Phaser.Scene {
       maxBet: 2496000,
       potLimit: 19968000,
       players: [
-        { name: "Payal", bet: 78000, isBlind: true, cards: [] },
+        { name: "Payal333", bet: 78000, isBlind: true, cards: [] },
         { name: "kushal", bet: 78000, isBlind: true, cards: [] },
         { name: "You", amount: "1.3Cr", cards: [] },
       ],
