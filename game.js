@@ -186,66 +186,21 @@ class TeenpattiGame extends Phaser.Scene {
     });
   }
 
-resize(width, height) {
-  // --- Background scaling ---
-  const bgTex = this.textures.get("background").getSourceImage();
-  const bgScale = Math.max(width / bgTex.width, height / bgTex.height);
-  this.bg.setPosition(width / 2, height / 2).setScale(bgScale);
+  resize(width, height) {
+    const bgTex = this.textures.get("background").getSourceImage();
+    const scaleX = width / bgTex.width;
+    const scaleY = height / bgTex.height;
+    const finalScale = Math.max(scaleX, scaleY);
 
-  // --- Table scaling (fit properly for all devices) ---
-  const tableTex = this.textures.get("table").getSourceImage();
-  const tableAspect = tableTex.width / tableTex.height;
-  const screenAspect = width / height;
+    this.bg.setPosition(width / 2, height / 2).setScale(finalScale);
 
-  let tableScale;
-  if (screenAspect > tableAspect) {
-    // Wide screen → limit by height
-    tableScale = (height * 0.55) / tableTex.height;
-  } else {
-    // Tall screen → limit by width
-    tableScale = (width * 0.85) / tableTex.width;
+    const tableTex = this.textures.get("table").getSourceImage();
+    const scaleXTable = (width * 0.9) / tableTex.width;
+    const scaleYTable = (height * 1.5) / tableTex.height;
+    const finalTableScale = Math.min(scaleXTable, scaleYTable);
+
+    this.table.setPosition(width / 2, height * 0.55).setScale(finalTableScale);
   }
-
-  // Prevent over-scaling on tall phones
-  tableScale = Math.min(tableScale, 1.1);
-
-  this.table
-    .setPosition(width / 2, height * 0.55)
-    .setScale(tableScale);
-
-  // --- Adjust bottom UI if already created ---
-  if (this.uiElements?.seeButtonImage) {
-    const safeY = Math.min(height * 0.9, height - 60); // keep 60px margin
-    this.uiElements.seeButtonImage.setY(safeY);
-    this.uiElements.seeButtonText.setY(safeY);
-  }
-
-  if (this.uiElements?.chaalButton) {
-    const safeY = Math.min(height * 0.95, height - 40);
-    this.uiElements.chaalButton.setY(safeY);
-  }
-
-  if (this.uiElements?.blindButton) {
-    const safeY = Math.min(height * 0.95, height - 40);
-    this.uiElements.blindButton.setY(safeY);
-  }
-
-  if (this.uiElements?.showButton) {
-    const safeY = Math.min(height * 0.95, height - 40);
-    this.uiElements.showButton.setY(safeY);
-  }
-
-  // --- Adjust bottom stripe position ---
-  if (this.uiElements?.bottomStripe) {
-    const { stripe, bootText, maxBetText, potLimitText } = this.uiElements.bottomStripe;
-    const stripeHeight = 80;
-    const stripeY = height - stripeHeight / 2;
-    stripe.setPosition(width / 2, stripeY).setSize(width, stripeHeight);
-    bootText.setPosition(width / 2, height - stripeHeight + 10);
-    maxBetText.setPosition(width / 2 - 30, height - stripeHeight + 35);
-    potLimitText.setPosition(width / 2 + 30, height - stripeHeight + 35);
-  }
-}
 
 
   createDealer(width, height) {
