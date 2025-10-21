@@ -196,7 +196,7 @@ class TeenpattiGame extends Phaser.Scene {
 
     const tableTex = this.textures.get("table").getSourceImage();
     const scaleXTable = (width * 0.9) / tableTex.width;
-    const scaleYTable = (height * 1.5) / tableTex.height;
+    const scaleYTable = (height * 0.45) / tableTex.height;
     const finalTableScale = Math.min(scaleXTable, scaleYTable);
 
     this.table.setPosition(width / 2, height * 0.55).setScale(finalTableScale);
